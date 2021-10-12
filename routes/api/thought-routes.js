@@ -4,11 +4,13 @@ const {
     getThoughtById,
     createThought,
     updateThought,
-    deleteThought
+    deleteThought,
+    deleteAllThoughts
 } = require('../../controllers/thought-controller');
 
 router.route('/')
     .get(getAllThoughts)
+    .delete(deleteAllThoughts)
     
 router.route('/:userId')
     .post(createThought)

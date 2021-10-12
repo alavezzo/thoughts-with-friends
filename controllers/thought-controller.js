@@ -80,6 +80,14 @@ const thoughtController = {
                 res.json(dbUserData)
             })
             .catch((err) => res.json(err));
+    },
+
+    deleteAllThoughts(req, res) {
+        Thought.deleteMany({})
+            .then(dbThoughtData => {
+                 return res.json(dbThoughtData)
+            })
+            .catch(err=>res.json(err));
     }
 };
 
