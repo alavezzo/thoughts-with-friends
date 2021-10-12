@@ -4,16 +4,16 @@ const UserSchema = new Schema(
     {
         username: {
             type: String,
-            unique: 'This username is taken!',
+            unique: true,
             required: 'Please provide a username!',
             trim: true
         },
         email: {
             type: String,
-            unique: 'There is already an account associated with this email. Please sign in!',
             required: 'Please provide a username',
             lowercase: true,
-            match: [/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/]
+            match: [/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/],
+            unique: true
         },
         thoughts: [
             {
@@ -29,7 +29,8 @@ const UserSchema = new Schema(
     {
         toJSON: {
             virtuals: true
-        }
+        },
+        id: false
     }
 );
 
