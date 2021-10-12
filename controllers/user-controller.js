@@ -57,29 +57,36 @@ const userController = {
 
     deleteUser({ params }, res) {
 
-        // User.findOneById({ _id: params.userId })
-        //     .then(dbUserData => {
-        //         const userThoughts = dbUserData.map(({ thoughts }) => thoughts)
-        //         return Promise(Thought.deleteMany({
-        //                 _id: {
-        //                     $in: [userThoughts]
-        //                 }
-        //             }));
-        //     })
-        //     .then((noThought) => res.json(noThoughts))
-        //     .catch((err) => {
-        //         res.status(400).json(err);
-        //     })
-    
-        User.findOneAndDelete({ _id: params.userId })
-            .then((dbUserData) => {
+        User.findOne({ _id: params.userId })
+            .then(dbUserData => {
                 if (!dbUserData) {
-                    res.status(404).json({ message: 'No user found with this id!' });
+                    res.status(404).json({ message: 'No user found with this id!'});
                     return;
                 }
-                res.json(dbUserData);
+
+                return Thought.deleteMany({
+                        _id: {
+                            $in: [dbUserData.thoughts]
+                        }
+                    })
             })
-            .catch(err => res.status(400).json(err));
+            .then((noThoughts) => {
+                return User.findOneAndDelete({ _id: params.userId})
+            })
+            .then((dbUserData) => res.json(dbUserData))
+            .catch((err) => {
+                res.status(400).json(err);
+            })
+    
+        // User.findOneAndDelete({ _id: params.userId })
+        //     .then((dbUserData) => {
+        //         if (!dbUserData) {
+        //             res.status(404).json({ message: 'No user found with this id!' });
+        //             return;
+        //         }
+        //         res.json(dbUserData);
+        //     })
+        //     .catch(err => res.status(400).json(err));
     },
 
     addFriendById({ params }, res) {
