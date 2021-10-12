@@ -3,11 +3,11 @@ const addDateSuffix = date => {
 
     const lastChar = dateStr.charAt(dateStr.length - 1);
 
-    if (lastChar === '1' && dateStrr !=='11') {
+    if (lastChar === '1' && dateStr !=='11') {
         dateStr = `${dateStr}st`;
     } else if (lastChar === '2' && dateStr !== '12') {
         dateStr = `${dateStr}nd`;
-    } else if (lastCar === '3' && dateStr !== '13') {
+    } else if (lastChar === '3' && dateStr !== '13') {
         dateStr = `${dateStr}rd`
     } else {
         dateStr = `${dateStr}th`;
@@ -72,7 +72,7 @@ module.exports = (
     if (dateObj.getHours > 12) {
         hour = Math.floor(dateObj.getHours() / 2);
     } else {
-        hour = date.Obj.getHours();
+        hour = dateObj.getHours();
     }
     // if hour is 0 (12:00am), change it to 12
     if (hour === 0) {
@@ -93,4 +93,4 @@ module.exports = (
     const formattedTimeStamp = `${formattedMonth} ${dayOfMonth}, ${year} at ${hour}:${minutes} ${periodOfDay}`
 
     return formattedTimeStamp
-}
+};
